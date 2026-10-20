@@ -1,402 +1,101 @@
-/* ============ THEME ============ */
-:root {
-  --bg: #0f1115;
-  --bg-elev: #14171c;
-  --bg-soft: #1a1e24;
-  --text: #e8e6e1;
-  --text-dim: #969ba3;
-  --text-faint: #6b7078;
-  --accent: #c9a86a;
-  --accent-soft: #8a7448;
-  --border: #23272e;
-  --ease: cubic-bezier(.22,1,.36,1);
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Source Serif 4', Georgia, serif;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --sidebar-w: 300px;
-  --pad-x: clamp(24px, 5vw, 80px);
-  --side-pad: clamp(16px, 2vw, 26px);
-}
-html[data-theme="light"] {
-  --bg: #faf8f4;
-  --bg-elev: #f3efe6;
-  --bg-soft: #ece7db;
-  --text: #1e2024;
-  --text-dim: #5c5f66;
-  --text-faint: #8a8d93;
-  --accent: #8a6d2f;
-  --accent-soft: #b99a4e;
-  --border: #e2ddd0;
-}
-
-/* ============ RESET ============ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  line-height: 1.75;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  transition: background .4s var(--ease), color .4s var(--ease);
-}
-img { max-width: 100%; display: block; }
-a { color: var(--accent); text-decoration: none; transition: color .25s var(--ease); }
-a:hover { color: var(--text); }
-
-/* ============ LAYOUT ============ */
-.app-wrapper {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  min-height: 100vh;
-}
-
-/* ============ SIDEBAR ============ */
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100dvh;
-  padding: clamp(20px, 3vh, 32px) var(--side-pad);
-  background: var(--bg-elev);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;          /* cho phép kéo cả sidebar khi mục lục dài */
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-  transition: background .4s var(--ease), border-color .4s var(--ease);
-}
-.sidebar::-webkit-scrollbar { width: 5px; }
-.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-/* --- TOP ROW: lang switch (phải trên) --- */
-.sidebar-top {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: clamp(14px, 2.5vh, 22px);
-  flex-shrink: 0;
-}
-.lang-switch {
-  display: inline-flex;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 2px;
-  gap: 2px;
-}
-.lang-switch button {
-  border: none;
-  background: transparent;
-  color: var(--text-dim);
-  font-family: var(--font-sans);
-  font-size: .68rem;
-  font-weight: 600;
-  letter-spacing: .8px;
-  padding: 5px 11px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background .25s var(--ease), color .25s var(--ease);
-}
-.lang-switch button.active { background: var(--accent); color: var(--bg); }
-
-/* --- AVATAR --- */
-.avatar-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: clamp(16px, 3vh, 26px);
-  flex-shrink: 0;
-}
-.avatar {
-  position: relative;
-  width: clamp(160px, 24vh, 210px);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--accent);
-  background: var(--bg-soft);
-  flex-shrink: 0;
-}
-.avatar img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform .5s var(--ease);
-}
-.avatar:hover img { transform: scale(1.15); }
-
-/* --- PROFILE --- */
-.profile { text-align: center; margin-bottom: clamp(18px, 3vh, 28px); flex-shrink: 0; }
-.profile h1 {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vh, 1.9rem);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: .2px;
-  font-style: italic;
-}
-.profile h1 em { font-style: normal; color: var(--accent); }
-.tagline {
-  font-family: var(--font-sans);
-  font-size: clamp(.66rem, 1.4vh, .74rem);
-  text-transform: uppercase;
-  letter-spacing: 1.1px;
-  color: var(--text-faint);
-  margin-top: 8px;
-  font-weight: 500;
-}
-.bio-short {
-  font-family: var(--font-sans);
-  font-size: clamp(.78rem, 1.6vh, .86rem);
-  color: var(--text-dim);
-  margin-top: 10px;
-  line-height: 1.55;
-  max-width: 30ch;
-  margin-inline: auto;
-}
-
-/* --- TOC: chung khối, không scroll riêng --- */
-.toc {
-  flex-shrink: 0;
-  margin-bottom: clamp(14px, 2vh, 20px);
-  margin-inline: calc(var(--side-pad) * -1);
-  padding-inline: var(--side-pad);
-}
-.toc ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
-.toc li a {
-  display: block;
-  padding: 9px 0;
-  font-family: var(--font-sans);
-  font-size: clamp(.78rem, 1.6vh, .85rem);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  color: var(--text-dim);
-  position: relative;
-  padding-left: 12px;
-  transition: color .25s var(--ease), padding-left .25s var(--ease);
-  border-left: 2px solid transparent;
-}
-.toc li a:hover {
-  color: var(--text);
-  border-left-color: var(--accent-soft);
-  padding-left: 16px;
-}
-.toc li a.active {
-  color: var(--accent);
-  border-left-color: var(--accent);
-  padding-left: 16px;
-  font-weight: 600;
-}
-
-.sidebar-footer {
-  font-family: var(--font-sans);
-  font-size: .62rem;
-  letter-spacing: .5px;
-  color: var(--text-faint);
-  text-align: center;
-  flex-shrink: 0;
-  margin-top: auto;          /* đẩy footer xuống cuối khi sidebar ngắn */
-  padding-top: 16px;
-}
-
-/* ============ MAIN ============ */
-.main-content {
-  padding: clamp(40px, 8vh, 88px) var(--pad-x);
-  max-width: 780px;
-  width: 100%;
-  margin-inline: auto;
-  position: relative;
-}
-
-/* --- THEME BUTTON: cố định góc trên phải, KHÔNG di chuyển --- */
-.theme-fixed {
-  position: absolute;
-  top: 20px;
-  right: 0;
-  z-index: 50;
-}
-.theme-toggle {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  color: var(--text);
-  font-size: 1.05rem;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0,0,0,.12);
-  transition: border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease);
-}
-.theme-toggle:hover {
-  border-color: var(--accent-soft);
-  transform: translateY(-1px) rotate(15deg);
-}
-
-section {
-  margin-bottom: clamp(40px, 7vh, 68px);
-  scroll-margin-top: 80px;
-}
-section:last-of-type { margin-bottom: 0; }
-
-.section-title {
-  font-family: var(--font-sans);
-  font-size: clamp(.8rem, 1.6vw, .92rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2.2px;
-  color: var(--accent);
-  margin-bottom: clamp(14px, 2.5vh, 22px);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.section-title::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-p {
-  color: var(--text-dim);
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  margin-bottom: 1em;
-}
-p strong { color: var(--text); font-weight: 600; }
-p:last-child { margin-bottom: 0; }
-
-.dropcap::first-letter {
-  font-family: var(--font-serif);
-  font-size: 2.9em;
-  float: left;
-  line-height: .85;
-  padding: 4px 10px 0 0;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-/* Project */
-.project { margin-bottom: 8px; }
-.project-name {
-  font-family: var(--font-sans);
-  font-size: clamp(1rem, 1.8vw, 1.18rem);
-  font-weight: 600;
-  color: var(--text) !important;
-  margin-bottom: 3px;
-  text-align: left;
-}
-.project-role {
-  font-family: var(--font-sans);
-  font-size: .72rem;
-  text-transform: uppercase;
-  letter-spacing: 1.1px;
-  color: var(--accent) !important;
-  margin-bottom: 14px;
-  text-align: left;
-}
-.project-stack {
-  margin-top: 14px;
-  font-family: var(--font-sans);
-  font-size: .78rem;
-  color: var(--text-dim);
-  text-align: left;
-}
-
-/* Achievement */
-.achievement {
-  display: grid;
-  grid-template-columns: 60px 1fr;
-  gap: 14px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-.achievement:last-child { border-bottom: none; padding-bottom: 0; }
-.achievement:first-of-type { padding-top: 0; }
-.ach-year {
-  font-family: var(--font-sans);
-  font-size: .76rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: .5px;
-  padding-top: 2px;
-}
-.ach-title {
-  color: var(--text) !important;
-  font-weight: 600;
-  font-size: .98rem;
-  margin-bottom: 3px;
-  text-align: left;
-}
-.ach-sub {
-  font-size: .9rem;
-  margin-bottom: 0;
-  text-align: left;
-}
-
-/* Contact */
-.contact-line {
-  font-size: .98rem;
-  line-height: 2;
-  color: var(--text-dim);
-  text-align: left;
-}
-
-footer {
-  padding-top: 36px;
-  border-top: 1px solid var(--border);
-  font-family: var(--font-sans);
-  font-size: .72rem;
-  color: var(--text-dim);
-  opacity: .8;
-  text-align: center;
-  margin-top: 48px;
-}
-
-/* ============ REVEAL ============ */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
-}
-
-[data-lang-block][hidden] { display: none !important; }
-
-/* ============ RESPONSIVE ============ */
-@media (max-width: 900px) {
-  .app-wrapper { grid-template-columns: 1fr; }
-  .sidebar {
-    position: relative;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding-block: clamp(20px, 4vh, 32px);
-    overflow: visible;
+const I18N = {
+  en: {
+    tagline: 'Student - BenTre High School for Gifted Students',
+    bioShort: 'Physics Specialist - Passionate about AI & Project Development',
+    navAbout: 'About',
+    navProjects: 'Projects',
+    navAchievements: 'Achievements',
+    navActivities: 'Activities',
+    navContact: 'Contact',
+    aboutTitle: 'About',
+    projectsTitle: 'Featured Projects',
+    projRole: 'Solo Developer · Research & Development',
+    achTitle: 'Achievements',
+    ach1Title: 'Second Prize (Provincial Level) — Creative Software Development (Category D3)',
+    ach1Sub: 'Young Programmer Competition Vinh Long Province',
+    ach2Title: 'Second Prize (Provincial Level) — Physics Excellence Award',
+    ach2Sub: 'Provincial Physics Excellence Selection Exam - Bến Tre Province',
+    acadTitle: 'Academic Activities',
+    act1Title: 'March 2026 — Arena Round Participation Certificate',
+    act1Sub: 'AI Young Guru National AI Innovation Competition, organized by FPT University, for research and development of the GemXcel education platform.',
+    act2Title: 'July 2025 — AI Agent Training Certificate',
+    act2Sub: 'Completed intensive AI Agent training at the Computer Science Summer School (CSE Summer School), Ho Chi Minh City University of Technology, National University.',
+    contactTitle: 'Contact',
+    footer: '© 2026 Dinh Minh Toan · Vinh Long, Vietnam · "Each problem brings a lesson, and each lesson changes a person."'
+  },
+  vi: {
+    tagline: 'Học sinh - Trường THPT Chuyên Bến Tre',
+    bioShort: 'Chuyên Lý - Đam mê AI & Phát triển dự án',
+    navAbout: 'Giới thiệu',
+    navProjects: 'Dự án',
+    navAchievements: 'Thành tích',
+    navActivities: 'Hoạt động',
+    navContact: 'Liên hệ',
+    aboutTitle: 'Giới thiệu',
+    projectsTitle: 'Dự án tiêu biểu',
+    projRole: 'Phát triển độc lập · Nghiên cứu & Phát triển',
+    achTitle: 'Thành tích',
+    ach1Title: 'Giải Nhì (Cấp Tỉnh) — Sáng tạo phần mềm (Bảng D3)',
+    ach1Sub: 'Cuộc thi Lập trình viên trẻ tỉnh Vĩnh Long',
+    ach2Title: 'Giải Nhì (Cấp Tỉnh) — Học sinh giỏi Vật lý',
+    ach2Sub: 'Kỳ thi chọn học sinh giỏi Vật lý cấp tỉnh - Bến Tre',
+    acadTitle: 'Hoạt động học thuật',
+    act1Title: 'Tháng 3/2026 — Chứng nhận tham gia Vòng Arena',
+    act1Sub: 'Cuộc thi Đổi mới AI Quốc gia AI Young Guru, do Đại học FPT tổ chức, cho nghiên cứu và phát triển nền tảng giáo dục GemXcel.',
+    act2Title: 'Tháng 7/2025 — Chứng nhận huấn luyện AI Agent',
+    act2Sub: 'Hoàn thành khóa huấn luyện chuyên sâu AI Agent tại Trường hè Khoa học Máy tính (CSE Summer School), Trường Đại học Bách Khoa TP.HCM, ĐHQG.',
+    contactTitle: 'Liên hệ',
+    footer: '© 2026 Đinh Minh Toàn · Vĩnh Long, Việt Nam · "Mỗi bài toán mang một bài học, và mỗi bài học thay đổi một con người."'
   }
-  .toc { margin-inline: calc(var(--side-pad) * -1); }
-  .toc ul { flex-direction: row; flex-wrap: wrap; gap: 4px; }
-  .toc li a { padding: 6px 10px; border-left: none; border-bottom: 2px solid transparent; }
-  .toc li a:hover, .toc li a.active { padding-left: 10px; border-left-color: transparent; border-bottom-color: var(--accent); }
-  .main-content { max-width: 100%; }
-  .theme-fixed { position: fixed; top: 14px; right: 14px; }
+};
+
+/* THEME */
+const root = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+const themeEmoji = document.getElementById('themeEmoji');
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  themeEmoji.textContent = theme === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('theme', theme);
 }
-@media (max-width: 520px) {
-  body { font-size: 17px; }
-  .main-content { padding-inline: clamp(18px, 5vw, 26px); }
-  .achievement { grid-template-columns: 1fr; gap: 3px; }
-  .ach-year { padding-top: 0; }
-  p { text-align: left; }
+applyTheme(localStorage.getItem('theme') || 'dark');
+themeBtn.addEventListener('click', () => {
+  applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* LANGUAGE */
+const langBtns = document.querySelectorAll('.lang-switch button');
+const langBlocks = document.querySelectorAll('[data-lang-block]');
+
+function applyLang(lang) {
+  root.setAttribute('data-lang', lang);
+  root.setAttribute('lang', lang);
+  langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  langBlocks.forEach(b => { b.hidden = b.dataset.langBlock !== lang; });
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (I18N[lang] && I18N[lang][key]) el.textContent = I18N[lang][key];
+  });
+  localStorage.setItem('lang', lang);
 }
+applyLang(localStorage.getItem('lang') || 'en');
+langBtns.forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+/* SCROLL REVEAL */
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+}
+
+/* TOC ACTIVE HIGHLIGHT */
+const tocLinks = document.querySelectorAll('.toc a');
+const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+if ('IntersectionObserver' in window && sections.length)
