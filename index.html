@@ -1,169 +1,408 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Dinh Minh Toan · Academic Profile & AI</title>
-  <link rel="icon" href="favicon.jpg">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P55TZGCZTG"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dinh Minh Toan · Academic Profile & AI</title>
+<link rel="icon" href="favicon.jpg">
+<meta name="twitter:image" content="avatar.jpg">
+<meta property="og:image" content="avatar.jpg">
 
-    gtag('config', 'G-P55TZGCZTG');
-  </script>
-  <meta name="twitter:image" content="avatar.jpg">
-  <meta property="og:image" content="avatar.jpg">
-  <!-- Google Fonts: Classic academic fonts with international support -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <img class="author-img" src="avatar.jpg" alt="Dinh Minh Toan">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P55TZGCZTG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P55TZGCZTG');
+</script>
+
+<style>
+  /* ---------- THEME TOKENS ---------- */
+  :root {
+    --bg: #0d0f12;
+    --bg-soft: #14171c;
+    --bg-card: #1a1e25;
+    --text: #e8eaed;
+    --text-dim: #a1a8b3;
+    --accent: #c9a86a;
+    --accent-soft: #8a7448;
+    --border: #262b33;
+    --shadow: 0 8px 30px rgba(0,0,0,.45);
+    --radius: 16px;
+    --maxw: 1080px;
+    --pad: clamp(16px, 5vw, 40px);
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+
+  html[data-theme="light"] {
+    --bg: #f7f5f0;
+    --bg-soft: #efece4;
+    --bg-card: #ffffff;
+    --text: #1c1f24;
+    --text-dim: #555b64;
+    --accent: #8a6d2f;
+    --accent-soft: #b99a4e;
+    --border: #e2ddd2;
+    --shadow: 0 8px 30px rgba(0,0,0,.08);
+  }
+
+  /* ---------- RESET ---------- */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    overflow-x: hidden;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    transition: background .4s var(--ease), color .4s var(--ease);
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--accent); text-decoration: none; transition: color .25s var(--ease); }
+  a:hover { color: var(--text); }
+
+  /* ---------- LAYOUT ---------- */
+  .wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--pad);
+  }
+
+  /* ---------- HEADER / NAV ---------- */
+  header.site {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 16px;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-size: 1.35rem; font-weight: 700; letter-spacing: .5px;
+    color: var(--text);
+  }
+  .nav-links { display: flex; gap: clamp(10px, 3vw, 28px); align-items: center; }
+  .nav-links a {
+    font-size: .9rem; font-weight: 500; color: var(--text-dim);
+    position: relative; padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: -2px;
+    width: 0; height: 2px; background: var(--accent);
+    transition: width .3s var(--ease);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .theme-toggle {
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text); width: 40px; height: 40px; border-radius: 50%;
+    cursor: pointer; display: grid; place-items: center;
+    font-size: 1.1rem; transition: transform .3s var(--ease), background .3s var(--ease);
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { transform: rotate(25deg) scale(1.06); }
+
+  /* hamburger (mobile) */
+  .nav-toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding-block: clamp(48px, 10vw, 110px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 5vw, 56px);
+    align-items: center;
+  }
+  .hero-text h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 700; line-height: 1.1; margin-bottom: 12px;
+  }
+  .hero-text .subtitle {
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    color: var(--text-dim); max-width: 60ch;
+  }
+
+  /* ẢNH ĐÃ FIX: khung cố định, object-fit cover, chống lỗi layout */
+  .hero-avatar {
+    width: clamp(140px, 34vw, 260px);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent);
+    box-shadow: var(--shadow);
+    background: var(--bg-card);
+    justify-self: center;
+    /* fallback nếu ảnh lỗi: hiện chữ cái đầu */
+  }
+  .hero-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .6s var(--ease);
+  }
+  .hero-avatar:hover img { transform: scale(1.06); }
+
+  @media (min-width: 768px) {
+    .hero { grid-template-columns: 1fr auto; }
+    .hero-avatar { justify-self: end; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding-block: clamp(40px, 8vw, 80px); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: clamp(20px, 4vw, 36px);
+    position: relative; display: inline-block;
+  }
+  .section-title::after {
+    content: ""; position: absolute; left: 0; bottom: -8px;
+    width: 44px; height: 3px; background: var(--accent); border-radius: 2px;
+  }
+
+  /* ---------- CARDS / GRID ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(16px, 3vw, 28px);
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: clamp(18px, 3vw, 28px);
+    box-shadow: var(--shadow);
+    transition: transform .35s var(--ease), border-color .35s var(--ease);
+    will-change: transform;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-soft);
+  }
+  .card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem; margin-bottom: 8px;
+  }
+  .card p { color: var(--text-dim); font-size: .95rem; }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer.site {
+    border-top: 1px solid var(--border);
+    padding-block: 32px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: .85rem;
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 640px) {
+    .nav-toggle {
+      display: grid; place-items: center;
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text); font-size: 1.2rem; cursor: pointer;
+    }
+    .nav-links {
+      position: fixed; inset: 64px 0 auto 0;
+      flex-direction: column; gap: 0;
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border);
+      padding: 12px var(--pad) 20px;
+      transform: translateY(-130%);
+      transition: transform .4s var(--ease);
+      z-index: 99;
+    }
+    .nav-links.open { transform: translateY(0); }
+    .nav-links a {
+      width: 100%; padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 1rem;
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .theme-toggle { margin-left: auto; }
+  }
+</style>
 </head>
 <body>
-<div class="app-wrapper">
-  <!-- SIDEBAR: Avatar, bio, navigation, and theme toggle -->
-  <aside class="sidebar">
-    <div class="avatar-wrapper">
-      <div class="avatar-ring" aria-hidden="true"></div>
-      <img class="author-img" src="https://cdn.phototourl.com/free/2026-05-20-13b04b47-3cb0-4ea0-9be7-c0affc727f22.jpg" alt="Dinh Minh Toan">
-    </div>
-    <div class="profile-info">
-      <h1>Dinh <em>Minh Toan</em></h1>
-      <div class="tagline">Student - BenTre High School for Gifted Students</div>
-      <div class="bio-short">
-        Physics Specialist - Passionate about AI & Project Development
+
+<!-- ========== HEADER ========== -->
+<header class="site">
+  <div class="wrap nav">
+    <a href="#top" class="brand">Dinh Minh Toan</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Mở menu">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">Giới thiệu</a>
+      <a href="#research">Nghiên cứu</a>
+      <a href="#publications">Công bố</a>
+      <a href="#contact">Liên hệ</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ========== HERO ========== -->
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-text reveal">
+        <h1>Dinh Minh Toan</h1>
+        <p class="subtitle">
+          <!-- DÁN MÔ TẢ NGẮN Ở ĐÂY -->
+          Nhà nghiên cứu · Trí tuệ nhân tạo · Học thuật
+        </p>
       </div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#achievements">Achievements</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="theme-panel">
-      <button id="themeToggle" class="theme-toggle" type="button">
-        <span>
-          <span id="themeEmoji">🌙</span>
-          <span id="themeLabel">Dark mode</span>
-        </span>
-        <span class="toggle-track" aria-hidden="true">
-          <span class="toggle-thumb"></span>
-        </span>
-      </button>
-    </div>
-    <div class="sidebar-footer">
-      <span>© 2026 · Vinh Long, Vietnam</span>
-    </div>
-  </aside>
+      <div class="hero-avatar reveal">
+        <img src="avatar.jpg" alt="Ảnh chân dung Dinh Minh Toan"
+             loading="eager" decoding="async"
+             onerror="this.style.display='none';this.parentNode.style.display='grid';this.parentNode.style.placeItems='center';this.parentNode.insertAdjacentHTML('beforeend','<span style=font-size:2.5rem;color:var(--accent)>DMT</span>')">
+      </div>
+    </section>
+  </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-
+  <!-- ========== ABOUT ========== -->
+  <div class="wrap">
     <section id="about">
-      <div class="section-title">About</div>
-      <p class="dropcap">
-        Hello! I'm <strong>Dinh Minh Toan</strong>, currently a student in the Physics Specialization program
-        (Class 34) at BenTre High School for Gifted Students. My core research and development focus revolves around
-        applying <strong>Artificial Intelligence (AI)</strong> and <strong>Computer Science</strong> to solve
-        real-world problems.
-      </p>
-      <p>
-        My core development direction is the intersection of Artificial Intelligence (AI) and Computer Science.
-        My current research focus centers deeply on optimizing Retrieval-Augmented Generation (RAG) architectures —
-        specifically techniques such as dynamic K-selection, noise detection, and token optimization.
-      </p>
-      <p>
-        I'm particularly interested in the intersection of AI and education — where technology can truly transform
-        how people learn. Beyond software development, I serve as Class Representative and participate in numerous
-        computer science and physics competitions at provincial and national levels.
-      </p>
-    </section>
-
-    <section id="projects">
-      <div class="section-title">Featured Projects</div>
-      <div class="project">
-        <p class="project-name">GemXcel — AI-Integrated Education Platform</p>
-        <p class="project-role">Solo Developer · Research & Development</p>
-        <p>
-          GemXcel is an advanced education platform I designed and built from scratch to demonstrate
-          the effectiveness of combining AI with Gamification in learning. The system integrates
-          <strong>Supabase</strong> for database management, solving data synchronization challenges
-          between local and server storage, and ensuring platform stability at real-world scale.
+      <h2 class="section-title reveal">Giới thiệu</h2>
+      <div class="reveal">
+        <!-- DÁN NỘI DUNG GIỚI THIỆU Ở ĐÂY -->
+        <p style="color:var(--text-dim);max-width:70ch;">
+          Nội dung giới thiệu của bạn...
         </p>
-        <p>
-          I built the system architecture using API calls to automate text content extraction and
-          generate academic assessments — minimizing question preparation time and personalizing
-          each user's learning experience. The project is fully managed through <strong>GitHub</strong>
-          and deployed on Cloudflare Pages.
-        </p>
-        <div class="project-stack">
-          Supabase · Cloudflare Pages · REST API · AI Integration &nbsp;|&nbsp;
-          <a href="https://gemxcel.pages.dev/" target="_blank">gemxcel.pages.dev ↗</a>
-        </div>
       </div>
     </section>
+  </div>
 
-    <section id="achievements">
-      <div class="section-title">Achievements</div>
-      <div class="achievement">
-        <span class="ach-year">2026</span>
-        <div>
-          <p class="ach-title">Second Prize (Provincial Level) — Creative Software Development (Category D3)</p>
-          <p class="ach-sub">Young Programmer Competition Vinh Long Province</p>
-        </div>
-      </div>
-      <div class="achievement">
-        <span class="ach-year">2024</span>
-        <div>
-          <p class="ach-title">Second Prize (Provincial Level) — Physics Excellence Award</p>
-          <p class="ach-sub">Provincial Physics Excellence Selection Exam - Bến Tre Province</p>
-        </div>
+  <!-- ========== RESEARCH ========== -->
+  <div class="wrap">
+    <section id="research">
+      <h2 class="section-title reveal">Hướng nghiên cứu</h2>
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Machine Learning</h3>
+          <p>Mô tả hướng nghiên cứu...</p>
+        </article>
+        <article class="card reveal">
+          <h3>Deep Learning</h3>
+          <p>Mô tả hướng nghiên cứu...</p>
+        </article>
+        <article class="card reveal">
+          <h3>Computer Vision</h3>
+          <p>Mô tả hướng nghiên cứu...</p>
+        </article>
       </div>
     </section>
+  </div>
 
-    <section>
-      <div class="section-title">Academic Activities</div>
-      <p>
-        I serve as <strong>Class Representative</strong> of the Physics Specialization class (Class 34)
-        at BenTre High School for Gifted Students, coordinating academic activities and supporting the class
-        throughout our studies. I consistently emphasize critical thinking and independent research.
-      </p>
-      <div class="achievement">
-        <span class="ach-year">2026</span>
-        <div>
-          <p class="ach-title">March 2026 — Arena Round Participation Certificate</p>
-          <p class="ach-sub">AI Young Guru National AI Innovation Competition, organized by FPT University, for research and development of the GemXcel education platform.</p>
-        </div>
-      </div>
-      <div class="achievement">
-        <span class="ach-year">2025</span>
-        <div>
-          <p class="ach-title">July 2025 — AI Agent Training Certificate</p>
-          <p class="ach-sub">Completed intensive AI Agent training at the Computer Science Summer School (CSE Summer School), Ho Chi Minh City University of Technology, National University.</p>
-        </div>
+  <!-- ========== PUBLICATIONS ========== -->
+  <div class="wrap">
+    <section id="publications">
+      <h2 class="section-title reveal">Công bố khoa học</h2>
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Tên bài báo 1</h3>
+          <p>Tạp chí / Hội nghị, Năm. <a href="#">Xem chi tiết →</a></p>
+        </article>
+        <article class="card reveal">
+          <h3>Tên bài báo 2</h3>
+          <p>Tạp chí / Hội nghị, Năm. <a href="#">Xem chi tiết →</a></p>
+        </article>
       </div>
     </section>
+  </div>
 
+  <!-- ========== CONTACT ========== -->
+  <div class="wrap">
     <section id="contact">
-      <div class="section-title">Contact</div>
-      <p>
-        If you'd like to discuss projects, explore research collaboration, or simply want to
-        chat about AI and software, I'd be delighted to hear from you.
-      </p>
-      <div class="contact-line">
-        ✦ Email &nbsp;·&nbsp; <a href="mailto:dinhminhtoan17062009@gmail.com">dinhminhtoan17062009@gmail.com</a><br>
-        ✦ GitHub &nbsp;·&nbsp; <a href="https://github.com/Tken176" target="_blank">github.com/Tken176</a><br>
-        ✦ LinkedIn &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/dinhminhtoan/" target="_blank">linkedin.com/in/dinhminhtoan</a>
+      <h2 class="section-title reveal">Liên hệ</h2>
+      <div class="reveal" style="color:var(--text-dim);">
+        <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+        <p>GitHub: <a href="https://github.com/" target="_blank" rel="noopener">github.com/...</a></p>
       </div>
     </section>
+  </div>
+</main>
 
-    <footer>
-      <p>© 2026 Dinh Minh Toan · Vinh Long, Vietnam · "Each problem brings a lesson, and each lesson changes a person."</p>
-    </footer>
-  </main>
-</div>
+<footer class="site">
+  <div class="wrap">© <span id="year"></span> Dinh Minh Toan. All rights reserved.</div>
+</footer>
 
-<script src="script.js"></script>
+<script>
+  /* ---------- THEME (mặc định tối) ---------- */
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme');
+  root.setAttribute('data-theme', saved || 'dark');
+  updateThemeIcon();
+
+  themeBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateThemeIcon();
+  });
+
+  function updateThemeIcon() {
+    themeBtn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  }
+
+  /* ---------- MOBILE NAV ---------- */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.textContent = '☰';
+  }));
+
+  /* ---------- SCROLL REVEAL (mượt, dùng IntersectionObserver) ---------- */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  /* ---------- NĂM ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
