@@ -98,4 +98,35 @@ if ('IntersectionObserver' in window) {
 const tocLinks = document.querySelectorAll('.toc a');
 const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
-if ('IntersectionObserver' in window && sections.length)
+if ('IntersectionObserver' in window && sections.length) {
+  const setActive = (id) => {
+    tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+  };
+
+  const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+
+  sections.forEach(s => sectionObs.observe(s));
+
+  tocLinks.forEach(a => a.addEventListener('click', () => {
+    tocLinks.forEach(x => x.classList.remove('active'));
+    a.classList.add('active');
+  }));
+}
+
+/* SMOOTH SCROLL */
+tocLinks.forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href');
+    const target = document.querySelector(id);
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 16;
+      window.scrollTo({ top, behavior: 'smooth' });
+      history.replaceState(null, '', id);
+    }
+  });
+});
