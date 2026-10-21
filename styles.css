@@ -79,6 +79,7 @@ a:hover { color: var(--text); }
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding-left: 6px;            /* ← thêm khoảng cách nếu cần */
   margin-bottom: clamp(14px, 2.5vh, 22px);
   flex-shrink: 0;
 }
